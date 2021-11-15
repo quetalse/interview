@@ -37,5 +37,13 @@ export type DataType = {
     name: string;
     type: TestType;
     status: TestStatus;
+    _statusSort: number;
     site: string;
+}
+
+export const statusSort = {
+    DRAFT: 4,
+    ONLINE: 1,
+    PAUSED: 2,
+    STOPPED: 3,
 }

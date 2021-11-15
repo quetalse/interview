@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 
 import { appActions } from "./reducer"
-import {ActionTypes, DataType, Site, Test} from "../@types";
+import {ActionTypes, DataType, Site, statusSort, Test} from "../@types";
 
 export const setLoading = (loading: boolean): appActions => ({
     type: ActionTypes.LOADING_DATA,
@@ -58,7 +58,10 @@ export const getAllData = (dispatch: React.Dispatch<appActions>) => {
                 let matchWww = host.match(/^www\.(.*)/);
                 return matchWww ? matchWww[1] : host
             }
-            return {id, name, status, type, site: getSiteName()}
+
+            let _statusSort = statusSort[status];
+
+            return {id, name, status, type, _statusSort, site: getSiteName()}
         })
 
         dispatch(addData(data))

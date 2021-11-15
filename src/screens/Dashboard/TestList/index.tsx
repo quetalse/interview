@@ -22,6 +22,7 @@ const TestList: React.FC = () => {
     const [ sortName, setSortName ] = useState<string | null>(null)
     const [ sortType, setSortType ] = useState<string | null>(null)
     const [ sortSite, setSortSite ] = useState<string | null>(null)
+    const [ sortStatus, setSortStatus ] = useState<string | null>(null)
 
     const sortArray = useCallback((direction: any, array: DataType[], field: keyof DataType) => {
         return [...testList].sort((a, b): number => {
@@ -75,6 +76,7 @@ const TestList: React.FC = () => {
 
             setSortName(null)
             setSortSite(null)
+            setSortStatus(null)
         }
     }, [sortArray, testList, sortType])
 
@@ -91,15 +93,33 @@ const TestList: React.FC = () => {
 
             setSortType(null)
             setSortName(null)
+            setSortStatus(null)
         }
     }, [sortArray, testList, sortSite])
+
+    useEffect(() => {
+        if(sortStatus){
+            let sorted = sortArray(sortStatus, testList, '_statusSort')
+            let isDifferent = false;
+
+            sorted.forEach((value, index) => {
+                if(value._statusSort !== testList[index]._statusSort) isDifferent = true;
+            })
+
+            if (isDifferent) setTestList(sorted)
+
+            setSortType(null)
+            setSortName(null)
+            setSortSite(null)
+        }
+    }, [sortArray, testList, sortStatus])
 
     let testListCreator = (list: DataType[]) => {
         if(!list.length) return <NoResult/>
         return list.map(test => <TestCard key={test.id} data={test}/>)
     }
 
-    let onSort = (field: string | null, setField: React.Dispatch<React.SetStateAction<string | null>>, title: string) => {
+    let onSort = (field: string | null, setField: React.Dispatch<React.SetStateAction<string | null>>) => {
         return () => {
             if(!field) setField('up')
             if(field === 'up') setField('down')
@@ -111,10 +131,10 @@ const TestList: React.FC = () => {
         <div className="tests">
             {testList.length ?
                 (<div className="tests__header">
-                        <span className="test-name" onClick={onSort(sortName, setSortName, 'name')}>NAME <UpDownArrow state={sortName}/></span>
-                        <span className="test-type" onClick={onSort(sortType, setSortType, 'type')}>TYPE <UpDownArrow state={sortType}/></span>
-                        <span className="test-status">STATUS</span>
-                        <span className="test-site" onClick={onSort(sortSite, setSortSite, 'site')}>SITE <UpDownArrow state={sortSite}/></span>
+                        <span className="test-name" onClick={onSort(sortName, setSortName)}>NAME <UpDownArrow state={sortName}/></span>
+                        <span className="test-type" onClick={onSort(sortType, setSortType)}>TYPE <UpDownArrow state={sortType}/></span>
+                        <span className="test-status" onClick={onSort(sortStatus, setSortStatus)}>STATUS <UpDownArrow state={sortStatus}/></span>
+                        <span className="test-site" onClick={onSort(sortSite, setSortSite)}>SITE <UpDownArrow state={sortSite}/></span>
                     </div>
                 ): null}
             {testListCreator(testList)}
