@@ -1,22 +1,10 @@
-import TestCard from "../../../components/Testcard";
 import React, {useCallback, useContext, useEffect, useState} from "react";
 import {AppContext} from "../../../datamanager/context";
+import NoResult from "../../../components/NoResult";
+import TestCard from "../../../components/Testcard";
 import {DataType} from "../../../@types";
 
 import "./styles.scss";
-import {addSearch} from "../../../datamanager/actions";
-import NoResult from "../../../components/NoResult";
-
-const sortArray = (direction: any, array: any[], field: any) => {
-    return [...array].sort((a, b): number => {
-            if(direction === 'up'){
-                return (a[field] > b[field]) ? 1 : -1
-            }else{
-                return (a[field] > b[field]) ? -1 : 1
-            }
-        }
-    );
-}
 
 const UpDownArrow: React.FC<{state: string | null}> = ({state}) => {
     if(!state) return null
@@ -34,6 +22,17 @@ const TestList: React.FC = () => {
     const [ sortType, setSortType ] = useState<string | null>(null)
     const [ sortSite, setSortSite ] = useState<string | null>(null)
 
+    const sortArray = useCallback((direction: any, array: DataType[], field: keyof DataType) => {
+        return [...testList].sort((a, b): number => {
+                if(direction === 'up'){
+                    return (a[field] > b[field]) ? 1 : -1
+                }else{
+                    return (a[field] > b[field]) ? -1 : 1
+                }
+            }
+        );
+    }, [testList])
+
     useEffect(() => {
         setTestList(state.data)
     }, [state.data])
@@ -47,52 +46,64 @@ const TestList: React.FC = () => {
 
     useEffect(() => {
         if(sortName){
-            // let sorted = sortArray(sortName, testList, 'name')
-            //
-            // setTestList(sorted)
+            let sorted = sortArray(sortName, testList, 'name')
+            let isDifferent = false;
+
+            sorted.forEach((value, index) => {
+                if(value.name !== testList[index].name) isDifferent = true;
+            })
+
+            if (isDifferent) setTestList(sorted)
 
             setSortType(null)
             setSortSite(null)
         }
-    }, [sortName])
+    }, [sortArray, testList, sortName])
 
     useEffect(() => {
         if(sortType){
-            // let sorted = sortArray(sortType, testList, 'type')
-            //
-            // setTestList(sorted)
+            let sorted = sortArray(sortType, testList, 'type')
+            let isDifferent = false;
+
+            sorted.forEach((value, index) => {
+                if(value.type !== testList[index].type) isDifferent = true;
+            })
+
+            if (isDifferent) setTestList(sorted)
 
             setSortName(null)
             setSortSite(null)
         }
-    }, [sortType])
+    }, [sortArray, testList, sortType])
 
     useEffect(() => {
         if(sortSite){
-            // let sorted = sortArray(sortSite, testList, 'site')
-            // setTestList(sorted)
+            let sorted = sortArray(sortSite, testList, 'site')
+            let isDifferent = false;
+
+            sorted.forEach((value, index) => {
+                if(value.site !== testList[index].site) isDifferent = true;
+            })
+
+            if (isDifferent) setTestList(sorted)
 
             setSortType(null)
             setSortName(null)
         }
-    }, [sortSite])
+    }, [sortArray, testList, sortSite])
 
     let testListCreator = (list: DataType[]) => {
         if(!list.length) return <NoResult/>
         return list.map(test => <TestCard key={test.id} data={test}/>)
     }
 
-    let onSort = useCallback((field: string | null, setField: React.Dispatch<React.SetStateAction<string | null>>, title: string) => {
+    let onSort = (field: string | null, setField: React.Dispatch<React.SetStateAction<string | null>>, title: string) => {
         return () => {
             if(!field) setField('up')
             if(field === 'up') setField('down')
             if(field === 'down') setField('up')
-
-            let sorted = sortArray(field, testList, title)
-
-            setTestList(sorted)
         }
-    }, [testList])
+    }
 
     return (
         <div className="tests">
