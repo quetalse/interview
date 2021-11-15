@@ -1,13 +1,12 @@
 import {useContext, useEffect, useState} from 'react';
 import {AppContext} from '../../datamanager/context';
-import TestCard from "../../components/Testcard";
-
 
 import axios from "axios";
 import Search from "./Search";
-import {ActionTypes, DataType, Site, Test, TestStatus, TestType} from '../../@types';
+import {ActionTypes, DataType, Site, Test} from '../../@types';
 
 import "./styles.scss";
+import TestList from "./TestList";
 
 const Dashboard = () => {
     const { dispatch, state } = useContext(AppContext);
@@ -73,7 +72,8 @@ const Dashboard = () => {
             {JSON.stringify(state)}
             <div className="screen__content">
                 <Search searchValue={searchValue} onSearch={setSearchValue}/>
-                <TestCard data={{id: 6, name: 'asa', site: 'sdasd', status: 'ONLINE' as TestStatus.ONLINE, type: 'SERVER_SIDE' as TestType.SERVER_SIDE}}/>
+
+                <TestList searchValue={searchValue} onSearch={setSearchValue}/>
 
             </div>
         </div>
