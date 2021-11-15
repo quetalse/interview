@@ -1,10 +1,9 @@
 export enum ActionTypes {
-    // ADD_SITES = 'ADD_SITES',
-    // ADD_TESTS = 'ADD_TESTS',
     ADD_DATA = "ADD_DATA",
     LOADING_DATA = "LOADING_DATA",
     ERROR_DATA = "ERROR_DATA",
-    SEARCH_TEXT = "SEARCH_TEXT"
+    SEARCH_TEXT = "SEARCH_TEXT",
+    SEARCH_COUNT = "SEARCH_COUNT"
 }
 
 export enum TestType {

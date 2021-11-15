@@ -5,6 +5,7 @@ import TestCard from "../../../components/Testcard";
 import {DataType} from "../../../@types";
 
 import "./styles.scss";
+import {addSearchCount} from "../../../datamanager/actions";
 
 const UpDownArrow: React.FC<{state: string | null}> = ({state}) => {
     if(!state) return null
@@ -14,7 +15,7 @@ const UpDownArrow: React.FC<{state: string | null}> = ({state}) => {
 
 const TestList: React.FC = () => {
 
-    const { state } = useContext(AppContext);
+    const { state, dispatch } = useContext(AppContext);
 
     const [ testList, setTestList] = useState<DataType[]>(state.data);
 
@@ -41,8 +42,9 @@ const TestList: React.FC = () => {
         let filtered = state.data.filter(test => {
             return test.name.toLowerCase().includes(state.search.toLowerCase());
         });
-        setTestList(filtered)
-    }, [state.search, state.data])
+        setTestList(filtered);
+        addSearchCount(dispatch, filtered.length)
+    }, [state.search, state.data, dispatch])
 
     useEffect(() => {
         if(sortName){

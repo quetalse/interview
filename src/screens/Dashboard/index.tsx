@@ -13,8 +13,8 @@ const Dashboard = () => {
     const { dispatch, state } = useContext(AppContext);
 
     useEffect(() => {
-        getAllData(dispatch)
-    }, [dispatch])
+        if(!state.data.length) getAllData(dispatch)
+    }, [dispatch, state.data])
 
     return (
         <div className="screen dashboard">

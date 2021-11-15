@@ -21,6 +21,9 @@ export type appActions = {
 } | {
     type: ActionTypes.SEARCH_TEXT,
     payload: string
+} | {
+    type: ActionTypes.SEARCH_COUNT,
+    payload: number
 }
 
 export const mainReducer = (state: typeof appState, action: appActions) => {
@@ -47,6 +50,11 @@ export const mainReducer = (state: typeof appState, action: appActions) => {
             return {
                 ...state,
                 search: action.payload
+            }
+        case ActionTypes.SEARCH_COUNT:
+            return {
+                ...state,
+                searchCount: action.payload
             }
 
         default:

@@ -18,8 +18,17 @@ export const addSearch = (dispatch: React.Dispatch<appActions>, text: string) =>
     dispatch({
         type: ActionTypes.SEARCH_TEXT,
         payload: text
-});
+    });
 }
+
+export const addSearchCount = (dispatch: React.Dispatch<appActions>, count: number) => {
+    dispatch({
+        type: ActionTypes.SEARCH_COUNT,
+        payload: count
+    });
+}
+
+
 
 export const addData = (data: DataType[]): appActions => ({
     type: ActionTypes.ADD_DATA,

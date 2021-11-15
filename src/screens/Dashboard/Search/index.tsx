@@ -19,7 +19,7 @@ const Search = () => {
                 placeholder="What test are you looking for?"
                 value={state.search}
                 onChange={(e: React.FormEvent<HTMLInputElement>) => addSearch(dispatch, e.currentTarget.value)}/>
-            {testLength ? <span className="search-box__info">{state.data.length} tests</span> : null}
+            {testLength ? <span className="search-box__info">{state.searchCount !== null ? state.searchCount : state.data.length} tests</span> : null}
         </div>
     )
 }
