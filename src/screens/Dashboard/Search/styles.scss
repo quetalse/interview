@@ -1,0 +1,35 @@
+.search-box{
+  max-width: 978px;
+  min-width: 500px;
+  margin: 0 auto;
+  position: relative;
+
+  &__pic{
+    position: absolute;
+    top: 16px;
+    left: 16px;
+  }
+
+  &__input{
+    margin-bottom: 30px;
+    width: 100%;
+    background: #FFFFFF;
+    border: 1px solid #EBEBEB;
+    border-radius: 15px;
+    height: 45px;
+    outline-style: none;
+    padding: 0 82px 0 37px;
+
+    &::placeholder{
+      color: #D1D1D1;
+    }
+  }
+
+  &__info{
+    position: absolute;
+    top: 14px;
+    right: 17px;
+    color: #D1D1D1;
+    font-size: 14px;
+  }
+}
