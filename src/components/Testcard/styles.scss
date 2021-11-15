@@ -1,0 +1,86 @@
+.test-card{
+  $self: &;
+  background-color: #ffff;
+  border-radius: 3px;
+  font-size: 12px;
+
+  width: 100%;
+  height: 70px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 15px;
+  margin: 5px 0;
+
+  &_burgundy{
+    border-left: 4px solid #E14165;
+  }
+
+  &_lightblue{
+    border-left: 4px solid #C2C2FF;
+  }
+
+  &_blue{
+    border-left: 4px solid #8686FF;
+  }
+
+  &:hover{
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+  }
+
+  &__name{
+    width: 389px;
+    font-size: 14px;
+    margin-right: 25px;
+    font-weight: bolder;
+  }
+
+  &__type{
+    width: 100px;
+    margin-right: 25px;
+  }
+
+  &__status{
+    width: 62px;
+    margin-right: 54px;
+    color: #5C5C5C;
+
+    &_online{
+      color: #1BDA9D
+    }
+
+    &_paused{
+      color: #FF8346
+    }
+
+    &_stopped{
+      color: #FE4848
+    }
+  }
+
+  &__site{
+    width: 117px;
+    margin-right: 60px;
+  }
+
+  &__btn{
+    width: 95px;
+    height: 30px;
+    border-radius: 10px;
+    line-height: 30px;
+    color: #ffff;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+
+    &_results{
+      background: #2EE5AC;
+    }
+
+    &_finalize{
+      background: #7D7D7D;
+    }
+  }
+}
