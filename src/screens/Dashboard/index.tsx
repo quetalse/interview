@@ -7,6 +7,7 @@ import {ActionTypes, DataType, Site, Test} from '../../@types';
 
 import "./styles.scss";
 import TestList from "./TestList";
+import Loader from '../../components/Loader';
 
 const Dashboard = () => {
     const { dispatch, state } = useContext(AppContext);
@@ -28,7 +29,6 @@ const Dashboard = () => {
         axios.all([requestSite, requestTests]).then(axios.spread((...responses) => {
             const responseSite: Site[] = responses[0].data
             const responseTest: Test[] = responses[1].data
-
 
             let data: DataType[] = responseTest.map(({id, name, status, type, siteId}) => {
 
@@ -72,9 +72,7 @@ const Dashboard = () => {
             {JSON.stringify(state)}
             <div className="screen__content">
                 <Search searchValue={searchValue} onSearch={setSearchValue}/>
-
-                <TestList searchValue={searchValue} onSearch={setSearchValue}/>
-
+                { (state.loading || !state.data.length) ? <Loader/> : <TestList searchValue={searchValue} onSearch={setSearchValue}/> }
             </div>
         </div>
     )
