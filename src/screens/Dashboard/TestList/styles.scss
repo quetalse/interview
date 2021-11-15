@@ -1,0 +1,53 @@
+.tests__header{
+  display: flex;
+  font-size: 11px;
+  padding: 0 19px;
+  color: #999999 !important;
+  font-weight: normal;
+  margin-bottom: 10px;
+
+  .test-name, .test-type, .test-site{
+    cursor: pointer;
+    user-select: none;
+    font-size: 11px;
+    font-weight: 500;
+  }
+
+  .test-status{
+    font-size: 11px;
+    font-weight: 500;
+  }
+}
+
+.test-name{
+  width: 389px;
+  font-size: 14px;
+  margin-right: 25px;
+}
+
+.test-type{
+  width: 100px;
+  margin-right: 25px;
+}
+
+.test-status{
+  width: 62px;
+  margin-right: 54px;
+}
+
+.test-site{
+  width: 117px;
+  margin-right: 60px;
+}
+
+.tests_no-result{
+  display: flex;
+  width: 100%;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 149px;
+
+  div{
+    margin-top: 37px;
+  }
+}

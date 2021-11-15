@@ -69,7 +69,6 @@ const Dashboard = () => {
     return (
         <div className="screen dashboard">
             <h1 className="screen__title">Dashboard</h1>
-            {JSON.stringify(state)}
             <div className="screen__content">
                 <Search searchValue={searchValue} onSearch={setSearchValue}/>
                 { (state.loading || !state.data.length) ? <Loader/> : <TestList searchValue={searchValue} onSearch={setSearchValue}/> }

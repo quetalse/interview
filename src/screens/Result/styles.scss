@@ -1,0 +1,21 @@
+.result{
+  .screen__title{
+    margin-bottom: 4px;
+  }
+
+  .screen__subtitle{
+    font-size: 14px;
+  }
+
+  .screen__back{
+    position: absolute;
+    left: 0;
+    bottom: 44px;
+    cursor: pointer;
+
+    a{
+      text-decoration: none;
+      color: #000000;
+    }
+  }
+}
