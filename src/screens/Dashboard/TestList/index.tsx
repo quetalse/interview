@@ -60,6 +60,7 @@ const TestList: React.FC = () => {
 
             setSortType(null)
             setSortSite(null)
+            setSortStatus(null)
         }
     }, [sortArray, testList, sortName])
 
