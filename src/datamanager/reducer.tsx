@@ -18,6 +18,9 @@ export type appActions = {
 } | {
     type: ActionTypes.ERROR_DATA,
     payload: boolean
+} | {
+    type: ActionTypes.SEARCH_TEXT,
+    payload: string
 }
 
 export const mainReducer = (state: typeof appState, action: appActions) => {
@@ -39,6 +42,11 @@ export const mainReducer = (state: typeof appState, action: appActions) => {
             return {
                 ...state,
                 error: action.payload
+            }
+        case ActionTypes.SEARCH_TEXT:
+            return {
+                ...state,
+                search: action.payload
             }
 
         default:

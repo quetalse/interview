@@ -5,6 +5,7 @@ import {DataType} from '../@types';
 
 export const appState = {
     data: [] as DataType[] | [],
+    search: '' as string | '',
     loading: false as boolean | false,
     error: false as boolean | false
 };

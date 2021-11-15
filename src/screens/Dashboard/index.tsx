@@ -1,77 +1,27 @@
 import {useContext, useEffect, useState} from 'react';
 import {AppContext} from '../../datamanager/context';
+import {getAllData} from "../../datamanager/actions";
 
-import axios from "axios";
 import Search from "./Search";
-import {ActionTypes, DataType, Site, Test} from '../../@types';
-
-import "./styles.scss";
 import TestList from "./TestList";
 import Loader from '../../components/Loader';
 
+
+import "./styles.scss";
+
 const Dashboard = () => {
     const { dispatch, state } = useContext(AppContext);
-    const [ searchValue , setSearchValue] = useState('');
 
     useEffect(() => {
-
-        let sitesUrl = `http://45.84.0.9:89/sites`;
-        let testsUrl = `http://45.84.0.9:89/tests`;
-
-        const requestSite = axios.get(sitesUrl);
-        const requestTests = axios.get(testsUrl);
-
-        dispatch({
-            type: ActionTypes.LOADING_DATA,
-            payload: true
-        })
-
-        axios.all([requestSite, requestTests]).then(axios.spread((...responses) => {
-            const responseSite: Site[] = responses[0].data
-            const responseTest: Test[] = responses[1].data
-
-            let data: DataType[] = responseTest.map(({id, name, status, type, siteId}) => {
-
-                let getSiteName = () => {
-                    let url = responseSite.find(site => site.id === siteId)?.url || '';
-                    let host = new URL(url).host;
-                    let matchWww = host.match(/^www\.(.*)/);
-                    return matchWww ? matchWww[1] : host
-                }
-                return {
-                    id,
-                    name,
-                    status,
-                    type,
-                    site: getSiteName()
-                }
-            })
-
-            dispatch({
-                type: ActionTypes.ADD_DATA,
-                payload: data
-            })
-
-            dispatch({
-                type: ActionTypes.LOADING_DATA,
-                payload: false
-            })
-
-        })).catch(errors => {
-            dispatch({
-                type: ActionTypes.ERROR_DATA,
-                payload: true
-            })
-        })
-
+        getAllData(dispatch)
     }, [dispatch])
 
     return (
         <div className="screen dashboard">
             <h1 className="screen__title">Dashboard</h1>
             <div className="screen__content">
-                <Search searchValue={searchValue} onSearch={setSearchValue}/>
-                { (state.loading || !state.data.length) ? <Loader/> : <TestList searchValue={searchValue} onSearch={setSearchValue}/> }
+                <Search/>
+                { (state.loading || !state.data.length) ? <Loader/> : <TestList/> }
             </div>
         </div>
     )

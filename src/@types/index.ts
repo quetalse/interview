@@ -4,6 +4,7 @@ export enum ActionTypes {
     ADD_DATA = "ADD_DATA",
     LOADING_DATA = "LOADING_DATA",
     ERROR_DATA = "ERROR_DATA",
+    SEARCH_TEXT = "SEARCH_TEXT"
 }
 
 export enum TestType {

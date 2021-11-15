@@ -4,6 +4,8 @@ import {AppContext} from "../../../datamanager/context";
 import {DataType} from "../../../@types";
 
 import "./styles.scss";
+import {addSearch} from "../../../datamanager/actions";
+import NoResult from "../../../components/NoResult";
 
 const sortArray = (direction: any, array: any[], field: any) => {
     return [...array].sort((a, b): number => {
@@ -22,10 +24,12 @@ const UpDownArrow: React.FC<{state: string | null}> = ({state}) => {
     return <span>&#8595;</span>
 }
 
-const TestList: React.FC<{searchValue: string, onSearch: any}> = ({searchValue, onSearch}) => {
+const TestList: React.FC = () => {
 
     const { state } = useContext(AppContext);
+
     const [ testList, setTestList] = useState<DataType[]>(state.data);
+
     const [ sortName, setSortName ] = useState<string | null>(null)
     const [ sortType, setSortType ] = useState<string | null>(null)
     const [ sortSite, setSortSite ] = useState<string | null>(null)
@@ -36,10 +40,10 @@ const TestList: React.FC<{searchValue: string, onSearch: any}> = ({searchValue, 
 
     useEffect(() => {
         let filtered = state.data.filter(test => {
-            return test.name.toLowerCase().includes(searchValue.toLowerCase());
+            return test.name.toLowerCase().includes(state.search.toLowerCase());
         });
         setTestList(filtered)
-    }, [searchValue, state.data])
+    }, [state.search, state.data])
 
     useEffect(() => {
         if(sortName){
@@ -74,12 +78,7 @@ const TestList: React.FC<{searchValue: string, onSearch: any}> = ({searchValue, 
     }, [sortSite])
 
     let testListCreator = (list: DataType[]) => {
-        if(!list.length) return (
-            <div className="tests_no-result">
-                <span className="title"> Your search did not match any results.</span>
-                <div className="test-card__btn test-card__btn_results" onClick={() => {onSearch('')}}>Reset</div>
-            </div>
-        )
+        if(!list.length) return <NoResult/>
         return list.map(test => <TestCard key={test.id} data={test}/>)
     }
 
